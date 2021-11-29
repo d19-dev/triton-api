@@ -35,13 +35,13 @@ export class OriginataBeanDto {
 
   @ApiProperty({
     required: false,
-    default: '',
+    default: process.env.DEFAULT_VARIABLE || '',
     example: 'userId=396223492',
     description:
       'Переменная канала. Допускается множество переменных в заголовке.',
   })
   @IsOptional()
-  readonly variable?: string = ''
+  readonly variable?: string = process.env.DEFAULT_VARIABLE || ''
 
   @ApiProperty({
     required: false,
