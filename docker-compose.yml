@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  dev:
+    container_name: triton-api-dev
+    image: triton-api-dev:${APP_VERSION}
+    build:
+      context: .
+      target: development
+    command: npm run start:debug
+    ports:
+      - ${PORT}:${PORT}
+      - 9229:9229
+    env_file:
+      - .env
+    networks:
+      - triton-api-network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+  prod:
+    container_name: triton-api-prod
+    image: triton-api-prod:${APP_VERSION}
+    build:
+      context: .
+      target: production
+    command: npm run start:prod
+    ports:
+      - ${PORT}:${PORT}
+    env_file:
+      - .env
+    networks:
+      - triton-api-network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+
+networks:
+  triton-api-network:
